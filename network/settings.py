@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 STATIC_URL = 'netapp/static/'
-#STATICFILES_DIRS = os.path.join(BASE_DIR, 'network/static'),
+#STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'

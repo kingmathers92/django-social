@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['networkdjango.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'storages',
     'crispy_forms',
     'netapp',
     'django.contrib.humanize',
@@ -136,12 +137,12 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-STATIC_URL = 'netapp/static/'
-#STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/netapp/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -149,3 +150,13 @@ LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
 
 django_heroku.settings(locals())
+
+# S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

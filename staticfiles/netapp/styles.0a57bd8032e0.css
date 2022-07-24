@@ -1,0 +1,268 @@
+.not-visible {
+    display: none;
+}
+
+.profile-head {
+    transform: translateY(5rem)
+}
+
+.cover {
+    background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+body {
+    margin: 0;
+    display:flex;
+    flex-direction:column;
+    background-color: #242F3F;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.profile-img{
+    width:80px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+}
+
+.comment {
+    width: 95%;
+    height: 50px;
+    padding: 10px;
+    background-color: #d0e2bc;
+}
+
+.mb-5 {
+    margin-bottom: 5px !important;
+}
+
+.w-big {
+    width: 200px !important;
+}
+
+.bwhite-lg {
+    background-color: transparent !important;
+}
+
+.bwhite-sm {
+    background-color: transparent !important;
+    width: 10px !important;
+}
+
+.comment-box {
+    display: none;
+}
+
+.w-btn {
+    width: 100px !important;
+}
+
+.c-btn {
+    width: 100px !important;
+}
+
+.listfollow {
+    background-color: var(--background);
+    display: block;
+    width: 300px;
+    min-height: 90px;
+    border: 3px solid var(--primary);
+    padding: 15px;
+    margin: calc(50vh - 30px) auto 0 auto;
+    box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--green),
+          20px -20px 0 -3px var(--background), 20px -20px var(--yellow),
+          30px -30px 0 -3px var(--background), 30px -30px var(--orange),
+          40px -40px 0 -3px var(--background), 40px -40px var(--red);
+    transition: box-shadow 1s, top 1s, left 1s;
+    position: relative;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  .listfollow:hover {
+    top: -40px;
+    left: 40px;
+    box-shadow: 0 0 0 -3px var(--background), 0 0 0 0 var(--green),
+        0 0 0 -3px var(--background), 0 0 0 0  var(--yellow),
+        0 0 0 -3px var(--background), 0 0 0 0  var(--orange),
+        0 0 0 -3px  var(--background), 0 0 0 0  var(--red);
+  }
+
+
+  :root {
+    --primary: #0700C4;
+    --secondary: #0000FF;
+    --background: white;
+    --green: #0052FF;
+    --yellow: #007AFF;
+    --orange: #00A3FF;
+    --red: #00CCFF;
+  }
+
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .listfollow h2 {
+    font-size: 11px;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .listfollow li {
+    color: var(--primary);
+    font-size: 14px;
+    font-family: "Archivo Black", "Archivo", sans-serif;
+    font-weight: normal;
+    list-style: none;
+  }
+
+.card-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 300px;
+}
+
+.card-img-profile {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 50px;
+}
+
+.like-form {
+    background-position: center center;
+}
+
+h4 {
+    text-shadow: 0 0 2px red;
+}
+
+.post-form {
+    color: white;
+}
+
+.lbtn {
+    float: right;
+}
+
+
+.loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #242f3f;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+  animation: loader 2s infinite ease;
+}
+
+.loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(180deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-inner {
+  0% {
+    height: 0%;
+  }
+
+  25% {
+    height: 0%;
+  }
+
+  50% {
+    height: 100%;
+  }
+
+  75% {
+    height: 100%;
+  }
+
+  100% {
+    height: 0%;
+  }
+}
+
+.page-footer {
+    clear: both;
+    min-height: 50px;
+    margin-top: auto;
+    line-height: 1.7;
+    font-weight: 400;
+    font-size: 1rem;
+    bottom: 0;
+    margin-right: 30;
+    position: relative;
+
+}
+
+#social-link {
+    color:#f8f9fa;
+    text-decoration: none;
+}
+
+.blink_me {
+    animation: blinker 2s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+h2, h6 {
+  color:#f8f9fa;
+}

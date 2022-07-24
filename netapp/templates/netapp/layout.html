@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link href="{% static 'netapp/styles.css' %}" rel="stylesheet">
+        <link rel="icon" href="{% static 'netapp/icon.jpg' %}">
+        <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Archivo:700&display=swap" rel="stylesheet">
+        <!-- jquery -->
+        {% block scripts %}
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'netapp/script.js' %}" defer></script>
+        {% endblock scripts %}
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'all-profiles-view' %}">Network</a>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile-view' user.profile.slug %}"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'posts' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'posts-follow' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'invites-view' %}">Requests</a>
+                    </li>
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search-view' %}">
+                        {% csrf_token %}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search Profiles" aria-label="Search" name="searched">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+          </nav>
+
+        <div class="container-fluid mt-3">
+            {% block body %}
+            {% endblock %}
+            <div class="loader-wrapper">
+                <span class="loader"><span class="loader-inner"></span></span>
+            </div>
+        </div>
+        <footer class="page-footer footer">
+            <div class="row pt-5">
+                <div class="cold-md-12">
+                    <div class="border-top ml-4" style="color: #f8f9fa;">
+                        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Website is Developed by <a id="social-link" class="blink_me" target="_blank" href="https://www.linkedin.com/in/khaledbenyahya/">Khaled Ben Yahya</a></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+
+</html>

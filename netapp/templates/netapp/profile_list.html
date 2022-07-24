@@ -1,0 +1,52 @@
+{% extends "netapp/layout.html" %}
+
+{% block title %}
+    All Profiles
+{% endblock title %}
+
+{% block body %}
+    {% if is_empty %}
+        <h1>Currently..No profiles to interact with</h1>
+    {% endif %}
+
+    <h6>Follow some people you may know..</h6>
+
+    {% for obj in profile_list %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-5 grid">
+                <div class="card container">
+                    <div class="row">
+                        <div class="card-body col-2">
+                            <img width="100px" class="avatar img-thumbnail rounded-circle z-depth-2 mt-4 ml-1" src={{obj.avatar.url}}>
+                        </div>
+                        <div class="col-5">
+                            <h3>{{obj.user}}</h3>
+                            <p>{{obj.bio}}</p>
+                            <a href={{obj.get_absolute_url}}><button class="btn btn-sm btn-primary mb-2 w-btn">See profile</button></a>
+                            <br>
+                            {% if obj.user not in rel_receiver and obj.user not in rel_sender %}
+                                <form action="{% url 'send-invite' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                                    <button type="submit" class=" btn btn-sm btn-success w-btn"><i class="bi-plus-lg"></i>&nbsp;Follow</button>
+                                </form>
+                            {% endif %}
+
+                            {% if obj.user in rel_receiver and request.user not in obj.following.all %}
+                                <button class="btn btn-sm disabled "><i class="bi-three-dots"></i>&nbsp;Waiting aprroval</button>
+                            {% endif %}
+
+                            {% if request.user in obj.following.all %}
+                                <form action="{% url 'remove-friend' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                                    <button type="submit" class=" btn btn-sm btn-dark w-btn"><i class="bi-dash-lg"></i>&nbsp;Unfollow</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock body %}

@@ -1,0 +1,97 @@
+{% extends "netapp/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}
+    My Posts
+{% endblock title %}
+
+{% block body %}
+<div>
+    <div class="border border-light rounded" style="width: 20rem;">
+        {% if post_added %}
+            <div id="alertFade" class="alert alert-success" role="alert">Post added!</div>
+        {% endif %}
+        <form action="" method="POST" enctype="multipart/form-data" class="form-group post-form dropzone">
+            {% csrf_token %}
+            {{p_form.as_p}}
+            <button type="submit" class="btn btn-sm btn-success" name="submit_pForm">Send Post</button>
+        </form>
+    </div>
+    {% for obj in post_list %}
+        <div class="card center post" style="width: 30rem;">
+            <div class="card-head" style="background-color: #d0e2bc;">
+                <img width="50px" class="avatar img-thumbnail rounded-circle z-depth-2 ml-1" src={{obj.author.avatar.url}}> <a href="{% url 'profile-view' obj.author.slug %}">{{ obj.author.user }}</a> - {{ obj.created|naturaltime }}
+                {% if request.user == obj.author.user %}
+                    <a href="{% url 'post-delete' obj.pk %}"><button class="btn btn-sm btn-success float-right mt-2 mr-1">Delete</button></a>
+                    <a href="{% url 'post-update' obj.pk %}"><button class="btn btn-sm btn-success float-right mr-1 mt-2">Edit</button></a>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if obj.picture %}
+                    <img class="card-img" src="{{obj.picture.url}}">
+                    <hr>
+                {% endif %}
+                <span class="card-text">{{obj.content|safe}}</span>
+            </div>
+            <button class="cmt_btn ui button mb-5">Show/Hide Comments</button>
+            <div class="comment-box">
+            {% if obj.comment_set.all %}
+                {% for c in obj.comment_set.all %}
+
+                    <img width="20px" class="avatar img-thumbnail rounded-circle"src={{c.user.avatar.url}} alt="">
+                    <span>{{ c.user }}</span>
+                    <div class="mt-2">{{ c.body }}</div>
+
+                {% endfor %}
+            {% endif %}
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <form action="" method="POST" class="form-group text-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value={{obj.id}}>
+                    {{ c_form }}
+                    <br>
+                    <button type="submit" class="btn btn-success btn-sm mt-3 float-left ml-2" name="submit_cForm">Comment</button>
+                </form>
+                <form action="{% url 'like-post-view' %}" method="POST" id="{{obj.id}}" class="mt-0 like-form form-group float-right">
+                    {% csrf_token %}
+                    <input type="hidden" name='post_id' value={{obj.id}}>
+                    <button type="submit" class="btn btn-sm btn-primary mt-0 mr-2 float-right like-btn{{obj.id}}">
+                        {% if profile not in obj.liked.all %}
+                            Like
+                        {% else %}
+                            Unlike
+                        {% endif %}
+                    </button>
+                </form>
+                <div class="float-right mr-2 mt-1 like-count{{obj.id}}">{{obj.like_count}}</div>
+            </div>
+        </div>
+{% endfor %}
+
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if post_list.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ post_list.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li class="page-item disabled"><a class="page-link" href="#">Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}</a></li>
+
+            {% if post_list.has_next%}
+                <li class="page-item"><a class="page-link" href="?page={{ post_list.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ post_list.paginator.num_pages }}">Last &raquo</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
+
+

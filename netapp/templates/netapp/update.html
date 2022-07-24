@@ -1,0 +1,16 @@
+{% extends "netapp/layout.html" %}
+
+{% block title %}
+    Update Post
+{% endblock title %}
+
+{% block body %}
+    <div class="card center" style="width: 30rem;">
+        <h3>Update post</h3>
+        <form action="" method="POST" enctype="multipart/form-data" class="form-group">
+            {% csrf_token %}
+            {{form}}
+            <button type='submit' class="btn float-right btn-sm btn-primary mt-5">Update</button>
+        </form>
+    </div>
+{% endblock body %}

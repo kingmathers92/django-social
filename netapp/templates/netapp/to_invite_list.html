@@ -1,0 +1,13 @@
+{% extends "netapp/layout.html" %}
+
+{% block title %}
+    Invite Friends
+{% endblock title %}
+
+{% block body %}
+    <ul>
+        {% for item in qs %}
+            <li style="color:white;">{{item}}</li>
+        {% endfor %}
+    </ul>
+{% endblock body %}

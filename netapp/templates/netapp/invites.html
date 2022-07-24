@@ -1,0 +1,44 @@
+{% extends "netapp/layout.html" %}
+
+{% block title %}
+    My invites
+{% endblock title %}
+
+{% block body %}
+
+    {% if is_empty %}
+        <h1 style="color:cyan;" class="text-center">No requests received..</h1>
+    {% endif %}
+
+    {% for obj in qs %}
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-5 grid">
+            <div class="card container">
+                <div class="row">
+                    <div class="card-body col-2">
+                        <img width="100px" class="avatar img-thumbnail rounded-circle z-depth-2 mt-4 ml-1" src={{obj.avatar.url}}>
+                    </div>
+                    <div class="col-5">
+                        <h3>{{obj.user}}</h3>
+                        <p>{{obj.bio}}</p>
+                        <a href="">
+                            <button class="btn btn-sm btn-primary mb-2 w-btn">See profile</button>
+                        </a>
+                        <form action="{% url 'accept-invite' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                            <button type="submit" class="btn btn-sm btn-outline-success w-btn"><i class="bi-check-lg"></i>&nbsp;Accept</button>
+                        </form>
+                        <form action="{% url 'reject-invite' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                            <button type="submit" class="btn btn-sm btn-outline-danger w-btn"><i class="bi-x-lg"></i>&nbsp;Reject</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock body %}

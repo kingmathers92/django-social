@@ -1,0 +1,30 @@
+{% extends "netapp/layout.html" %}
+
+{% block title %}
+    Delete Post
+{% endblock title %}
+
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'warning' in message.tags %}
+                <div>
+                    <div class="alert alert-warning" role="alert">
+                        {{message}}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if not messages %}
+            <div class="card center" style="width: 30rem;">
+                <h3>Delete post?</h3>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete the post?s</p>
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+    {% endif %}
+{% endblock body %}

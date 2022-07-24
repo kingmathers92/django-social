@@ -1,0 +1,120 @@
+{% extends "netapp/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    My Profile
+{% endblock title %}
+
+{% block body %}
+<!--Modal-->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Your Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img width="100px" src="{{profile.avatar.url}}">
+        <form action="", method="POST", enctype="multipart/form-data" class="form">
+          {% csrf_token %}
+          {{form.as_p}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  {% if confirm %}
+    <div class="alert alert-info" role="alert">Your profile has been updated!</div>
+  {% endif %}
+</div>
+  <div class="row py-5 px-4">
+    <div class="col-md-5 mx-auto">
+        <!-- Profile widget -->
+        <div class="bg-white shadow rounded overflow-hidden">
+            <div class="px-4 pt-0 pb-4 cover">
+                <div class="media align-items-end profile-head">
+                    <div class="profile mr-3"><img src="{{object.avatar.url}}" width="130" class="rounded mb-2 img-thumbnail"></div>
+                    <div class="media-body mb-5 text-white">
+                        <h4 class="mt-0 mb-3">{{profile.first_name}} {{profile.last_name}}</h4>
+                        <p style="color: black;" class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>{{profile.country}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-light p-5 d-flex justify-content-end text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block">{{object.get_posts_num}}</h5><small class="text-muted"> <i class="fas fa-image mr-1"></i>Posts</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block">{{object.get_followers_num}}</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Followers</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block">{{object.get_likes_given_num}} </h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Likes</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="ml-2">
+              {% if object.user and object.user not in rel_receiver and object.user not in rel_sender %}
+              <form action="{% url 'send-invite' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="profile_pk" value={{object.pk}}>
+                  <button type="submit" class=" btn btn-sm btn-success w-btn"><i class="bi-plus-lg"></i>&nbsp;Follow</button>
+              </form>
+              {% endif %}
+
+              {% if object.user in rel_receiver and request.user not in object.following.all %}
+                <button class="btn btn-sm disabled "><i class="bi-three-dots"></i>&nbsp;Waiting aprroval</button>
+              {% endif %}
+
+              {% if request.user in object.following.all %}
+                <form action="{% url 'remove-friend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{object.pk}}>
+                    <button type="submit" class=" btn btn-sm btn-dark w-btn"><i class="bi-dash-lg"></i>&nbsp;Unfollow</button>
+                </form>
+              {% endif %}
+            </div>
+            <div class="px-4 py-3">
+                <h5 class="mb-0">About</h5>
+                <button class="btn btn-sm btn-secondary float-right" id="modal-btn" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
+
+                <div class="p-4 rounded shadow-sm bg-light">
+                    <p class="font-italic mb-0">{{profile.bio}}</p>
+                </div>
+            </div>
+            <div class="py-4 px-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0">Recent posts</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                </div>
+                {% if len_posts %}
+                  <div class="row">
+                    {% for post in posts %}
+                      <div class="col-lg-6 mb-2 pr-lg-1 fluid">
+                        {% if post.picture %}
+                          <img class="card-img-profile" src="{{post.picture.url}}">
+                        {% endif %}
+                        {{post.content}}
+                      </div>
+                    {% endfor %}
+                    {% else %}
+                      <h1>This user didn't post anything yet..</h1>
+                    {% endif %}
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+

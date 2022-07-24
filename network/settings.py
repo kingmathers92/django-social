@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('MY_DEBUG_ENV_VAR', default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['networkdjango.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

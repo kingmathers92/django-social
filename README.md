@@ -40,6 +40,7 @@ One of my projects from the cs50web course with extra and work in progress featu
 
 ## To Do🔧:
 
+- [ ] Issue with static files storage to be fixed !important
 - [ ] Edit profile
 - [ ] Automatically have as standard profile and background pic as soon as you create user.
 - [ ] Chat feature using websocket

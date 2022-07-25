@@ -137,12 +137,15 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/staticfiles'),
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/netapp/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+STATIC_URL = '/static/'
+MEDIA_URL = 'static/media/'
+if DEBUG:
+    MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -152,7 +155,7 @@ LOGIN_REDIRECT_URL = "/"
 django_heroku.settings(locals())
 
 # S3 BUCKETS CONFIG
-
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % env("AWS_STORAGE_BUCKET_NAME")
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")

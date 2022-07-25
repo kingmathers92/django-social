@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ['networkdjango.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'storages',
+
     'crispy_forms',
     'netapp',
     'django.contrib.humanize',
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'netapp/staticfiles'),
 STATIC_ROOT = os.path.join(BASE_DIR, '/static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 STATIC_URL = '/static/'
@@ -155,7 +156,7 @@ LOGIN_REDIRECT_URL = "/"
 django_heroku.settings(locals())
 
 # S3 BUCKETS CONFIG
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % env("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % env("AWS_STORAGE_BUCKET_NAME")
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
